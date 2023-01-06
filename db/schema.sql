@@ -19,7 +19,8 @@ create table employee (
     id int not null AUTO_INCREMENT primary key,
     first_name varchar(30) not null,
     last_name varchar(30) not null,
-    role_id int not null,
+    role_id int,
     manager_id int,
-    foreign key (role_id) references roles(id)
+    foreign key (role_id) references roles(id) on delete cascade,
+    foreign key (manager_id) references employee(id) on delete set null
 );
