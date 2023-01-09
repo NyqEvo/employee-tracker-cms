@@ -1,14 +1,13 @@
 const inquirer = require('inquirer');
 const db = require('./db')
-// const EmployeeDatabase = require('./db/index')
-const consoleTable = require('console.table');
+const cTable = require('console.table');
 
-// mainPrompt();
+mainPrompt();
 
 function mainPrompt() {
     const promptInfo = {
         questionList: ['Quit', 'View Employees', 'Add Employee', 'Update Employee Role', 'View Departments', 'Add Department', 'View Roles', 'Add Role'],
-        functionList: [EmployeeDatabase.quitProgram(), EmployeeDatabase.viewEmployees(), EmployeeDatabase.addEmployees(), EmployeeDatabase.updateEmployeeRole(), EmployeeDatabase.viewDepartments(), EmployeeDatabase.addDepartment(), EmployeeDatabase.viewRoles(), EmployeeDatabase.addRole()],
+        functionList: [quitProgram(), viewEmployeesMain(), addEmployeesMain(), updateEmployeeRoleMain(), viewDepartmentsMain(), addDepartmentMain(), viewRolesMain(), addRoleMain()],
     }
     inquirer.prompt(
         {
@@ -26,4 +25,10 @@ function mainPrompt() {
         })
 }
 
-console.log(db)
+function quitProgram() {
+    console.log('Exiting the program')
+}
+
+function viewEmployeesMain() {
+    db.viewEmployees() 
+}
