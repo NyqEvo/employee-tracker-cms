@@ -6,7 +6,7 @@ class EmployeeDatabase {
     }
 
     findAllEmployees() {
-        return this.connection.promise().query(`SELECT employee.first_name AS 'first name', employee.last_name AS 'last name', department.name AS 'department', roles.title AS 'title', roles.salary AS 'salary'  
+        return this.connection.promise().query(`SELECT employee.first_name AS 'first name', employee.last_name AS 'last name', roles.title AS 'title', roles.salary AS 'salary'  
         FROM department
         JOIN roles ON department.id = roles.department_id 
         JOIN employee ON employee.role_id = roles.id;`)
@@ -21,9 +21,9 @@ class EmployeeDatabase {
         })
     }
 
-    createNewEmployee(firstName, lastName, roleId, managerId) {
+    createNewEmployee(firstName, lastName, roleId) {
         this.connection.promise().query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
-        VALUES (?, ?, ?, ?)`, [firstName, lastName, roleId, managerId], (err, res) => {
+        VALUES (?, ?, ?, null)`, [firstName, lastName, roleId], (err, res) => {
             if (err) {
                 console.log(err)
             }
@@ -59,12 +59,9 @@ class EmployeeDatabase {
     }
 
     findAllRoles() {
-        this.connection.promise().query(`select department.name as 'department', roles.title as 'title' from department join roles on department.id = roles.department_id;`, (err, res) => {
-            if (err) {
-                console.log(err)
-            }
-            return res
-        })
+        return this.connection.promise().query(
+            `SELECT department.name AS 'department', roles.title, roles.id FROM roles INNER JOIN department ON roles.department_id = department.id ;`
+        )
     }
 
     addRole(title, salary, departmentId) {
